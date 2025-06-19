@@ -1,25 +1,25 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="card">
-    <div class="card-header">
-        <h5>Tambah Penjualan</h5>
+<div class="bg-white rounded-lg shadow-md overflow-hidden">
+    <div class="bg-gray-800 text-white px-6 py-4">
+        <h5 class="text-lg font-semibold">Tambah Penjualan</h5>
     </div>
-    <div class="card-body">
+    <div class="p-6">
         <form action="{{ route('penjualan.store') }}" method="POST">
             @csrf
             
-            <div class="mb-3">
-                <label for="Faktur" class="form-label">Faktur</label>
-                <input type="number" class="form-control @error('Faktur') is-invalid @enderror" id="Faktur" name="Faktur" value="{{ old('Faktur') }}" required>
+            <div class="mb-4">
+                <label for="Faktur" class="block text-sm font-medium text-gray-700 mb-1">Faktur</label>
+                <input type="number" class="w-full px-3 py-2 border @error('Faktur') border-red-500 @else border-gray-300 @enderror rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" id="Faktur" name="Faktur" value="{{ old('Faktur') }}" required>
                 @error('Faktur')
-                    <div class="invalid-feedback">{{ $message }}</div>
+                    <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                 @enderror
             </div>
             
-            <div class="mb-3">
-                <label for="Nopelanggan" class="form-label">No Pelanggan</label>
-                <select class="form-select @error('Nopelanggan') is-invalid @enderror" id="Nopelanggan" name="Nopelanggan" required>
+            <div class="mb-4">
+                <label for="Nopelanggan" class="block text-sm font-medium text-gray-700 mb-1">No Pelanggan</label>
+                <select class="w-full px-3 py-2 border @error('Nopelanggan') border-red-500 @else border-gray-300 @enderror rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" id="Nopelanggan" name="Nopelanggan" required>
                     <option value="">-- Pilih Pelanggan --</option>
                     @foreach($pelanggans as $pelanggan)
                         <option value="{{ $pelanggan->Nopelanggan }}" {{ old('Nopelanggan') == $pelanggan->Nopelanggan ? 'selected' : '' }}>
@@ -28,24 +28,24 @@
                     @endforeach
                 </select>
                 @error('Nopelanggan')
-                    <div class="invalid-feedback">{{ $message }}</div>
+                    <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                 @enderror
             </div>
             
-            <div class="mb-3">
-                <label for="Tanggalpenjualan" class="form-label">Tanggal Penjualan</label>
-                <input type="date" class="form-control @error('Tanggalpenjualan') is-invalid @enderror" id="Tanggalpenjualan" name="Tanggalpenjualan" value="{{ old('Tanggalpenjualan', date('Y-m-d')) }}" required>
+            <div class="mb-6">
+                <label for="Tanggalpenjualan" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Penjualan</label>
+                <input type="date" class="w-full px-3 py-2 border @error('Tanggalpenjualan') border-red-500 @else border-gray-300 @enderror rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" id="Tanggalpenjualan" name="Tanggalpenjualan" value="{{ old('Tanggalpenjualan', date('Y-m-d')) }}" required>
                 @error('Tanggalpenjualan')
-                    <div class="invalid-feedback">{{ $message }}</div>
+                    <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                 @enderror
             </div>
             
-            <div class="d-flex justify-content-between">
-                <a href="{{ route('penjualan.index') }}" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left"></i> Kembali
+            <div class="flex justify-between">
+                <a href="{{ route('penjualan.index') }}" class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-md transition-colors flex items-center">
+                    <i class="fas fa-arrow-left mr-2"></i> Kembali
                 </a>
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save"></i> Simpan
+                <button type="submit" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md transition-colors flex items-center">
+                    <i class="fas fa-save mr-2"></i> Simpan
                 </button>
             </div>
         </form>

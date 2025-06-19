@@ -4,120 +4,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aplikasi Penjualan Barang</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8f9fa;
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#64748b',
+                        success: '#10b981',
+                        danger: '#ef4444',
+                        warning: '#f59e0b',
+                        info: '#3b82f6',
+                    }
+                }
+            }
         }
-        .navbar {
-            background-color: #343a40;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .navbar-brand {
-            font-weight: bold;
-            color: #ffffff !important;
-        }
-        .nav-link {
-            color: #ffffff !important;
-            margin-right: 15px;
-        }
-        .nav-link:hover {
-            color: #17a2b8 !important;
-        }
-        .card {
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-        .card-header {
-            background-color: #343a40;
-            color: white;
-            border-radius: 10px 10px 0 0 !important;
-            font-weight: bold;
-        }
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-        }
-        .btn-success {
-            background-color: #28a745;
-            border-color: #28a745;
-        }
-        .btn-danger {
-            background-color: #dc3545;
-            border-color: #dc3545;
-        }
-        .btn-warning {
-            background-color: #ffc107;
-            border-color: #ffc107;
-            color: #212529;
-        }
-        .table {
-            background-color: white;
-        }
-        .alert {
-            border-radius: 10px;
-            margin-top: 20px;
-        }
-        footer {
-            background-color: #343a40;
-            color: white;
-            padding: 15px 0;
-            text-align: center;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-        .content {
-            margin-bottom: 70px;
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-area {
+                @apply pb-20;
+            }
         }
     </style>
 </head>
-<body>
+<body class="bg-gray-50 font-sans">
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark mb-4">
-        <div class="container">
-            <a class="navbar-brand" href="{{ route('dashboard') }}">Aplikasi Penjualan Barang</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-home"></i> Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('barang.index') }}"><i class="fas fa-box"></i> Barang</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('pelanggan.index') }}"><i class="fas fa-users"></i> Pelanggan</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('penjualan.index') }}"><i class="fas fa-shopping-cart"></i> Penjualan</a>
-                    </li>
-                </ul>
+    <nav class="bg-gray-800 text-white shadow-lg mb-6">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <a class="text-xl font-bold" href="{{ route('dashboard') }}">Aplikasi Penjualan Barang</a>
+                <div class="block">
+                    <button id="mobile-menu-button" class="md:hidden flex items-center px-3 py-2 border rounded text-gray-300 border-gray-400 hover:text-white hover:border-white">
+                        <svg class="fill-current h-4 w-4" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+                    </button>
+                </div>
+                <div class="hidden md:block">
+                    <div class="flex space-x-4">
+                        <a class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 hover:text-white" href="{{ route('dashboard') }}"><i class="fas fa-home mr-1"></i> Dashboard</a>
+                        <a class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 hover:text-white" href="{{ route('barang.index') }}"><i class="fas fa-box mr-1"></i> Barang</a>
+                        <a class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 hover:text-white" href="{{ route('pelanggan.index') }}"><i class="fas fa-users mr-1"></i> Pelanggan</a>
+                        <a class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 hover:text-white" href="{{ route('penjualan.index') }}"><i class="fas fa-shopping-cart mr-1"></i> Penjualan</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Mobile menu, show/hide based on menu state. -->
+            <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                    <a class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700 hover:text-white" href="{{ route('dashboard') }}"><i class="fas fa-home mr-1"></i> Dashboard</a>
+                    <a class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700 hover:text-white" href="{{ route('barang.index') }}"><i class="fas fa-box mr-1"></i> Barang</a>
+                    <a class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700 hover:text-white" href="{{ route('pelanggan.index') }}"><i class="fas fa-users mr-1"></i> Pelanggan</a>
+                    <a class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700 hover:text-white" href="{{ route('penjualan.index') }}"><i class="fas fa-shopping-cart mr-1"></i> Penjualan</a>
+                </div>
             </div>
         </div>
     </nav>
 
     <!-- Content -->
-    <div class="container content">
+    <div class="container mx-auto px-4 content-area">
         @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="fas fa-check-circle"></i> {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4 rounded" role="alert">
+                <div class="flex items-center">
+                    <i class="fas fa-check-circle mr-2"></i>
+                    <span>{{ session('success') }}</span>
+                    <button type="button" class="ml-auto" onclick="this.parentElement.parentElement.remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
             </div>
         @endif
 
         @if(session('error'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <i class="fas fa-exclamation-circle"></i> {{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4 rounded" role="alert">
+                <div class="flex items-center">
+                    <i class="fas fa-exclamation-circle mr-2"></i>
+                    <span>{{ session('error') }}</span>
+                    <button type="button" class="ml-auto" onclick="this.parentElement.parentElement.remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
             </div>
         @endif
 
@@ -125,19 +96,25 @@
     </div>
 
     <!-- Footer -->
-    <footer>
-        <div class="container">
-            <p class="mb-0">&copy; {{ date('Y') }} Aplikasi Penjualan Barang</p>
+    <footer class="bg-gray-800 text-white py-4 fixed bottom-0 w-full">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; {{ date('Y') }} Aplikasi Penjualan Barang</p>
         </div>
     </footer>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- SweetAlert2 for confirmations -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        // Delete confirmation
+        // Mobile menu toggle
         document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+            
+            // Delete confirmation
             const deleteButtons = document.querySelectorAll('.delete-confirm');
             
             deleteButtons.forEach(button => {
@@ -150,8 +127,8 @@
                         text: "Data yang dihapus tidak dapat dikembalikan!",
                         icon: 'warning',
                         showCancelButton: true,
-                        confirmButtonColor: '#dc3545',
-                        cancelButtonColor: '#6c757d',
+                        confirmButtonColor: '#ef4444',
+                        cancelButtonColor: '#64748b',
                         confirmButtonText: 'Ya, hapus!',
                         cancelButtonText: 'Batal'
                     }).then((result) => {
